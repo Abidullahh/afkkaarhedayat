@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afkaar Travel Agency</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        section {
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .requirements {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Afkaar Travel Agency</h1>
+    <h3>Your Gateway to Turkey Student Visa</h3>
+</header>
+
+<section class="container">
+    <div class="requirements">
+        <h2>Turkey Student Visa Requirements</h2>
+        <ul>
+            <li>Passport and its scan</li>
+            <li>Identification card and its scan</li>
+            <li>Three biometric pictures</li>
+            <li>TR YOS scores</li>
+            <li>Bank statement</li>
+            <li>Bank statement letter</li>
+        </ul>
+    </div>
+
+    <h2>Sign Up for Turkey Student Visa</h2>
+    <form action="process.php" method="POST">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="surname" placeholder="Surname" required>
+        <input type="text" name="fathername" placeholder="Father's Name" required>
+        <input type="text" name="mothername" placeholder="Mother's Name" required>
+        <input type="text" name="passportnumber" placeholder="Passport Number" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Create Password" required>
+        <input type="password" name="repeat_password" placeholder="Repeat Password" required>
+        <input type="tel" name="mobilenumber" placeholder="Mobile Number (+93)" required>
+        <select name="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <input type="date" name="dob" placeholder="Date of Birth" required>
+
+        <input type="submit" value="Submit" class="full-width">
+    </form>
+</section>
+
+</body>
+</html>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $fathername = $_POST['fathername'];
+    $mothername = $_POST['mothername'];
+    $passportnumber = $_POST['passportnumber'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $mobilenumber = $_POST['mobilenumber'];
+    $gender = $_POST['gender'];
+    $dob = $_POST['dob'];
+
+    // Validate passwords match
+    if ($password !== $_POST['repeat_password']) {
+        echo "Passwords do not match!";
+        exit;
+    }
+
+    // Send an email
+    $to = "hedayatabidullah@gmail.com";
+    $subject = "New Turkey Visa Signup - Afkaar Travel Agency";
+    $message = "Name: $name\nSurname: $surname\nFather's Name: $fathername\nMother's Name: $mothername\nPassport Number: $passportnumber\nEmail: $email\nMobile Number: $mobilenumber\nGender: $gender\nDate of Birth: $dob";
+    $headers = "From: no-reply@afkaar-travel.com";
+
+    if (mail($to, $subject, $message, $headers)) {
+        echo "Form submitted successfully.";
+    } else {
+        echo "There was a problem sending your form.";
+    }
+}
+?>
